@@ -9,20 +9,15 @@ let subscriptionKey = process.env['COMPUTER_VISION_SUBSCRIPTION_KEY'];
 let endpoint = process.env['COMPUTER_VISION_ENDPOINT']
 if (!subscriptionKey) { throw new Error('Set your environment variables for your subscription key and endpoint.'); }
 
-var uriBase = endpoint + 'vision/v2.1/ocr';
+var uriBase = endpoint + 'formrecognizer/v2.0-preview/prebuilt/receipt/analyze';
+const imageUrl = 'http://www.oihana.eu/upload/facture__FI-P921602-200344.jpg';
 
-    const imageUrl = 'http://nas.clemot.com:3000/Users/olivierclemot/OneDrive-perso/OneDrive/projects/vault/public/files/1586771831254-.jpg';
 
-
-// Request parameters.
-const params = {
-    'language': 'unk',
-    'detectOrientation': 'true',
-};
+//const imageUrl = 'https://raw.githubusercontent.com/Azure-Samples/cognitive-services-REST-api-samples/master/curl/form-recognizer/contoso-allinone.jpg'
+  
 
 const options = {
     uri: uriBase,
-    qs: params,
     body: '{"url": ' + '"' + imageUrl + '"}',
     headers: {
         'Content-Type': 'application/json',
@@ -30,16 +25,38 @@ const options = {
     }
 };
 
+
+/*
 request.post(options, (error, response, body) => {
+console.log(response.statusCode);
+
   if (error) {
     console.log('Error: ', error);
     return;
   }
-  let jsonResponse = JSON.stringify(JSON.parse(body), null, '  ');
-  console.log('JSON Response\n');
-  console.log(jsonResponse);
+
+  console.log(response.headers);
+
 });
+*/
 
 
+const options2 = {
+  uri: 'https://form-recognizer-eu.cognitiveservices.azure.com/formrecognizer/v2.0-preview/prebuilt/receipt/analyzeResults/8d279b3d-e27e-48d3-98d2-0cc9b70f473d',
+  body: '{"url": ' + '"' + imageUrl + '"}',
+  headers: {
+      'Content-Type': 'application/json',
+      'Ocp-Apim-Subscription-Key' : subscriptionKey
+  }
+};
 
 
+request.get(options2, (error, response, body) => {
+  if (error) {
+    console.log('Error: ', error);
+    return;
+  }
+
+  console.log (response);
+
+});

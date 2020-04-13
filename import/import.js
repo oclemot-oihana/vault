@@ -1,21 +1,23 @@
 'use strict';
 
 const request = require('request');
+const dotenv = require('dotenv');
+dotenv.config();
+
 
 let subscriptionKey = process.env['COMPUTER_VISION_SUBSCRIPTION_KEY'];
 let endpoint = process.env['COMPUTER_VISION_ENDPOINT']
 if (!subscriptionKey) { throw new Error('Set your environment variables for your subscription key and endpoint.'); }
 
-var uriBase = endpoint + 'vision/v2.1/analyze';
+var uriBase = endpoint + 'vision/v2.1/ocr';
 
-const imageUrl =
-    'https://upload.wikimedia.org/wikipedia/commons/3/3c/Shaki_waterfall.jpg';
+    const imageUrl = 'http://nas.clemot.com:3000/Users/olivierclemot/OneDrive-perso/OneDrive/projects/vault/public/files/1586771831254-.jpg';
+
 
 // Request parameters.
 const params = {
-    'visualFeatures': 'Categories,Description,Color',
-    'details': '',
-    'language': 'en'
+    'language': 'unk',
+    'detectOrientation': 'true',
 };
 
 const options = {
@@ -37,3 +39,7 @@ request.post(options, (error, response, body) => {
   console.log('JSON Response\n');
   console.log(jsonResponse);
 });
+
+
+
+

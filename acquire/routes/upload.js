@@ -1,9 +1,12 @@
 const multer = require('multer');
 const path   = require('path');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 /** Storage Engine */
 const storageEngine = multer.diskStorage({
-  destination: './public/files',
+  destination: process.env['Storagefilepath'],
   filename: function(req, file, fn){
     fn(null,  new Date().getTime().toString()+'-'+path.extname(file.originalname));
   }

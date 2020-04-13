@@ -1,10 +1,12 @@
-require("../models/Filemodel");
+const dotenv = require('dotenv');
+dotenv.config();
+
 
 var express = require('express');
 var router    = express.Router();
 var upload    = require('./upload');
 var mongoose  = require('mongoose');
-var Filevar     = mongoose.model('Filemodels');
+var Filevar     = require("../data-model/Filemodel");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -34,8 +36,9 @@ router.post('/upload', function(req, res) {
             /**
              * Create new record in mongoDB
              */
-            var fullPath = "files/"+req.file.filename;
+            var fullPath = process.env['Storagefilepath']+req.file.filename;
 
+            console.log(fullPath);
             var document = {
               path:     fullPath, 
               caption:   req.body.caption
